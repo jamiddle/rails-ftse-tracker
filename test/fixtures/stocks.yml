@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  symbol: MyString
+  name: MyString
+  last-price: 1.5
+  change: 1.5
+  percentage-change: 1.5
+  market-cap: 1
+
+two:
+  symbol: MyString
+  name: MyString
+  last-price: 1.5
+  change: 1.5
+  percentage-change: 1.5
+  market-cap: 1
