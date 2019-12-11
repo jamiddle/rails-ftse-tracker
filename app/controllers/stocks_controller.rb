@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require "alphavantagerb"
 
 class StocksController < ApplicationController
   def new
