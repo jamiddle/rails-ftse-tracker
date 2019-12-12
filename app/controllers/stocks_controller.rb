@@ -8,13 +8,15 @@ class StocksController < ApplicationController
   end
 
   def create
+    @stock = Stock.new(stock_params)
+    @stock.name = @names.first
+    @stock.save
   end
 
   def index
     scrape
     @stocks = Stock.all
     @names
-    raise
   end
 
   def show
