@@ -8,13 +8,10 @@ class StocksController < ApplicationController
   end
 
   def create
-    @names.each do |name|
-      @stock = stock.new(name: name)
-    end
-    if @stock.save
-      redirect_to stock_path
-      puts 'the stock saved'
-    end
+    @stock = Stock.new(stock_params)
+    @stock.name = @names.first
+    @stock.save
+
   end
 
   def index
