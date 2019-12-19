@@ -4,13 +4,14 @@ require 'nokogiri'
 class StocksController < ApplicationController
 
   def new
-    @stock = stock.new
+    @stock = Stock.new
   end
 
   def create
     @stock = Stock.new(stock_params)
     @stock.name = @names.first
     @stock.save
+
   end
 
   def index
