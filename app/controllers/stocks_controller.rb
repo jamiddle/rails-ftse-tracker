@@ -4,17 +4,23 @@ require 'nokogiri'
 class StocksController < ApplicationController
 
   def new
-    @stock = stock.new
+    @stock = Stock.new
   end
 
   def create
+    @names.each do |name|
+      @stock = stock.new(name: name)
+    end
+    if @stock.save
+      redirect_to stock_path
+      puts 'the stock saved'
+    end
   end
 
   def index
     scrape
     @stocks = Stock.all
     @names
-    raise
   end
 
   def show

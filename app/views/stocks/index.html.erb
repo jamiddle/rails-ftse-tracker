@@ -1,2 +1,12 @@
 <h1>This is the index</h1>
-<p><%= @html_doc %></p>
+<!-- <p><%= @html_doc %></p>
+ -->
+ <!-- <p><%= @names %></p> -->
+<% @stocks.each do |stock| %>
+  <%= stock.name %>
+<% end %>
+<p><%= @stocks %></p>
+
+
+
+<%= link_to 'create stock', new_stock_path %>
