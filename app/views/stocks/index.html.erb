@@ -1,12 +1,13 @@
 <h1>This is the index</h1>
 
-<!-- <p><%= @html_doc %></p>
- -->
- <!-- <p><%= @names %></p> -->
 <% @stocks.each do |stock| %>
-  <%= stock.name %>
+  <p><%= stock.name %></p>
 <% end %>
+
 <p><%= @stocks %></p>
+<% raise %>
+
+<%= @names %>
 
 
 
