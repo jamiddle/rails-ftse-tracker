@@ -28,7 +28,7 @@ class StocksController < ApplicationController
 
   def scrape
     @names = []
-    @each_last_price = []
+    @prices = []
     @each_change = []
     @each_percentage_change = []
     @each_market_cap = []
@@ -37,12 +37,16 @@ class StocksController < ApplicationController
     @html_doc.search('.ttl a').children.each do |name|
       @names << name.text
     end
+    @html_doc.search('.price-ttl span').children.each do |price|
+      @prices << price.text.delete_suffix('p').gsub(/[^\d^.]/, '').to_f
+    end
   end
 
   def assign_stocks
     @stocks = Stock.all
-    @stocks.zip(@names).each do |stock, name|
+    @stocks.zip(@names, @prices).each do |stock, name, price|
       stock.name = name
+      stock.last_price = price
     end
   end
 
