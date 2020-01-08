@@ -2,22 +2,19 @@ require 'open-uri'
 require 'nokogiri'
 
 class StocksController < ApplicationController
-
   def new
     @stock = Stock.new
   end
 
   def create
     @stock = Stock.new(stock_params)
-    @stock.name = @names.first
-    @stock.save
-
   end
 
   def index
     scrape
+    create
+    assign_stocks
     @stocks = Stock.all
-    @names
   end
 
   def show
@@ -31,15 +28,27 @@ class StocksController < ApplicationController
 
   def scrape
     @names = []
-    @html_doc = Nokogiri::HTML(open("https://www.sharecast.com/index/FTSE_100").read)
-    @html_doc.search(".ttl a").children.each do |name|
+    @each_last_price = []
+    @each_change = []
+    @each_percentage_change = []
+    @each_market_cap = []
+
+    @html_doc = Nokogiri::HTML(open('https://www.sharecast.com/index/FTSE_100').read)
+    @html_doc.search('.ttl a').children.each do |name|
       @names << name.text
+    end
+  end
+
+  def assign_stocks
+    @stocks = Stock.all
+    @stocks.zip(@names).each do |stock, name|
+      stock.name = name
     end
   end
 
   private
 
   def stock_params
-    params.require(:stock).permit(:symbol, :name, :last_price, :change, :percentage_change, :market_cap)
+    params.permit(:name, :last_price, :change, :percentage_change, :market_cap)
   end
 end
