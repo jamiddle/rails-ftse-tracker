@@ -63,6 +63,11 @@ class StocksController < ApplicationController
     end
   end
 
+  def market_cap_percentage(stock)
+    market_total = @market_caps.reduce(:+)
+    market_percentage = stock.market_cap / market_total
+  end
+
   def stock_params
     params.permit(:name, :last_price, :change, :percentage_change, :market_cap)
   end
