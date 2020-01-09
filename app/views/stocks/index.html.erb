@@ -1,17 +1,17 @@
-<h1>This is the index</h1>
+<div class="container">
+  <h1 class="row justify-content-around">FTSE 100 Calculator</h1>
+  <form>
+    <div class="form-group">
+      <label for="inputAmount">Enter investment amount</label>
+      <input type="email" class="form-control" placeholder="£...">
+      <small id="explanation" class="form-text text-muted">We'll calculate the exact amount to spend on each stock.</small>
+    </div>
+    <button class="btn btn-primary">Calculate!</button>
+  </form>
 
-<% @prices.each do |price| %>
-  <li><%= price %></li>
-<% end %>
-
-<p><%= @stocks %></p>
-<%= @names %>
-<%= @prices %>
-<%= @percentage_changes %>
-
-<% raise %>
-
-
-
-<%= link_to 'create stock', new_stock_path %>
-
+  <% @stocks.each do |stock| %>
+    <% market_total = @market_caps.reduce(:+) %>
+    <% market_percentage = stock.market_cap.to_f / market_total.to_f if stock.market_cap %>
+    <ul class="m-1 p-0"><%= stock.name %> -> <%= stock.market_cap %> (<%= market_percentage %>%)</ul>
+  <% end %>
+</div>
