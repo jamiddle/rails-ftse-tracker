@@ -49,13 +49,17 @@ class StocksController < ApplicationController
     @html_doc.search('.Chg-ttl span').children.first(100).each do |percentage_change|
       @percentage_changes << percentage_change.text.delete_suffix('%').to_f
     end
+    @html_doc.search('.capitalization-ttl').children.first(100).each do |market_cap|
+      @market_caps << market_cap.text.delete_suffix('m').delete_prefix('£').gsub(/[^\d^.]/, '').to_i * 1_000_000
+    end
   end
 
   def assign_stocks
-    @stocks.zip(@names, @prices, @percentage_changes).each do |stock, name, price, percentage_change|
+    @stocks.zip(@names, @prices, @percentage_changes, @market_caps).each do |stock, name, price, percentage_change, market_cap|
       stock.name = name
       stock.last_price = price
       stock.percentage_change = percentage_change
+      stock.market_cap = market_cap
     end
   end
 
