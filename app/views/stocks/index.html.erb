@@ -1,17 +1,12 @@
 <div class="container">
   <h1 class="row justify-content-around">FTSE 100 Calculator</h1>
-  <form>
-    <div class="form-group">
-      <label for="inputAmount">Enter investment amount</label>
-      <input type="email" class="form-control" placeholder="£...">
-      <small id="explanation" class="form-text text-muted">We'll calculate the exact amount to spend on each stock.</small>
-    </div>
-    <button class="btn btn-primary">Calculate!</button>
-  </form>
+  <%= form_tag action: 'index' %>
+  <%= text_area :form, :amount, cols: '40', rows: '5' %>
+  <%= submit_tag 'submit' %>
+
+  <p>HERE IS AMOUNT: <%= @total_amount %></p>
 
   <% @stocks.each do |stock| %>
-    <% market_total = @market_caps.reduce(:+) %>
-    <% market_percentage = stock.market_cap.to_f / market_total.to_f if stock.market_cap %>
-    <ul class="m-1 p-0"><%= stock.name %> -> <%= stock.market_cap %> (<%= market_percentage %>%)</ul>
+    <ul><%= stock.name %> -> <%= stock.market_cap %> (<%= stock.market_percentage %>%) ----- Invest: <%= stock.investment_amount %></ul>
   <% end %>
 </div>

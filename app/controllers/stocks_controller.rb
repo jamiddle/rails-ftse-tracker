@@ -19,6 +19,14 @@ class StocksController < ApplicationController
     create
     @stocks = Stock.all
     assign_stocks
+    total_investment_amount = params['form']['amount'] if params['form']
+    market_total = @market_caps.reduce(:+)
+    @stocks.each do |stock|
+      if stock.market_cap
+        stock.market_percentage = stock.market_cap.to_f / market_total.to_f
+        stock.investment_amount = total_investment_amount.to_f * stock.market_percentage
+      end
+    end
   end
 
   def show
@@ -63,12 +71,7 @@ class StocksController < ApplicationController
     end
   end
 
-  def market_cap_percentage(stock)
-    market_total = @market_caps.reduce(:+)
-    market_percentage = stock.market_cap / market_total
-  end
-
   def stock_params
-    params.permit(:name, :last_price, :change, :percentage_change, :market_cap)
+    params.permit(:name, :last_price, :change, :percentage_change, :market_cap, :investment_amount, :market_percentage)
   end
 end
