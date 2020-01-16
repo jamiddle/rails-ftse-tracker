@@ -1,8 +1,11 @@
 <div class="container">
   <h1 class="row justify-content-around">FTSE 100 Calculator</h1>
-  <%= form_tag action: 'index' %>
-  <%= text_area :form, :amount, cols: '40', rows: '5' %>
-  <%= submit_tag 'submit' %>
+  <form action="#">
+    <div class="form-group">
+      <input type="text" id="textArea">
+      <input type="submit" id="submit">
+    </div>
+  </form>
 
   <p>HERE IS AMOUNT: <%= @total_amount %></p>
 
