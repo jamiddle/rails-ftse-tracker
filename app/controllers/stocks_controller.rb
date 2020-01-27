@@ -14,12 +14,20 @@ class StocksController < ApplicationController
   end
 
   def index
+    @stocks = Stock.all
     @stocks.destroy_all if @stocks
     scrape
     create
-    @stocks = Stock.all
     assign_stocks
-    total_investment_amount = params['form']['amount'] if params['form']
+  end
+
+  def show
+    @stocks = Stock.all
+    @stocks.destroy_all if @stocks
+    scrape
+    create
+    assign_stocks
+    total_investment_amount = params['investment_amount'] if params['investment_amount']
     market_total = @market_caps.reduce(:+)
     @stocks.each do |stock|
       if stock.market_cap
@@ -27,9 +35,6 @@ class StocksController < ApplicationController
         stock.investment_amount = total_investment_amount.to_f * stock.market_percentage
       end
     end
-  end
-
-  def show
   end
 
   def edit

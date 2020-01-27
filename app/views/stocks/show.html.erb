@@ -1,0 +1,6 @@
+<div class="container">
+  <h4>Total Investment Amount: £<%= params['investment_amount'] %></h4>
+  <% @stocks.each do |stock| %>
+    <ol><%= stock.name %>: £<%= stock.investment_amount.round(2) %></ol>
+  <% end %>
+</div>

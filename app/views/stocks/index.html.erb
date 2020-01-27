@@ -1,11 +1,9 @@
 <div class="container">
   <h1 class="row justify-content-around">FTSE 100 Calculator</h1>
-  <form action="#">
-    <div class="form-group">
-      <input type="text" id="textArea">
-      <input type="submit" id="submit">
-    </div>
-  </form>
+  <%= form_with(url: '/stocks/show', method: 'get') do %>
+    <%= text_field_tag(:investment_amount) %>
+    <%= submit_tag("Submit") %>
+  <% end %>
 
   <p>HERE IS AMOUNT: <%= @total_amount %></p>
 
