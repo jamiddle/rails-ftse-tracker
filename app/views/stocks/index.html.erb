@@ -1,13 +1,12 @@
 <div class="container">
   <h1 class="row justify-content-around">FTSE 100 Calculator</h1>
   <%= form_with(url: '/stocks/show', method: 'get') do %>
+    <%= label_tag("Enter your investment amount:") %>
     <%= text_field_tag(:investment_amount) %>
     <%= submit_tag("Submit") %>
   <% end %>
 
-  <p>HERE IS AMOUNT: <%= @total_amount %></p>
-
   <% @stocks.each do |stock| %>
-    <ul><%= stock.name %> -> <%= stock.market_cap %> (<%= stock.market_percentage %>%) ----- Invest: <%= stock.investment_amount %></ul>
+    <ul><%= stock.name %> -> market cap: <%= stock.market_cap %> (<%= stock.market_percentage.round(4) %>%)</ul>
   <% end %>
 </div>

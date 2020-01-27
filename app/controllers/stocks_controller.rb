@@ -19,6 +19,12 @@ class StocksController < ApplicationController
     scrape
     create
     assign_stocks
+    market_total = @market_caps.reduce(:+)
+    @stocks.each do |stock|
+      if stock.market_cap
+        stock.market_percentage = stock.market_cap.to_f / market_total.to_f
+      end
+    end
   end
 
   def show
@@ -27,7 +33,7 @@ class StocksController < ApplicationController
     scrape
     create
     assign_stocks
-    total_investment_amount = params['investment_amount'] if params['investment_amount']
+    total_investment_amount = params['investment_amount']
     market_total = @market_caps.reduce(:+)
     @stocks.each do |stock|
       if stock.market_cap
